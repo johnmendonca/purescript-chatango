@@ -17,6 +17,10 @@
   "dependencies": {
     "html5shiv": "^3.7.3",
     "respond": "^1.4.2",
-    "normalize-scss": "^3.0.3"
+    "normalize-scss": "^3.0.3",
+    "purescript-console": "^2.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^2.0.0"
   }
 }
