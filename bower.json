@@ -18,7 +18,19 @@
     "html5shiv": "^3.7.3",
     "respond": "^1.4.2",
     "normalize-scss": "^3.0.3",
-    "purescript-console": "^2.0.0"
+    "purescript-console": "^2.0.0",
+    "purescript-aff": "^2.0.3",
+    "purescript-affjax": "^3.0.2",
+    "purescript-node-http": "^3.0.1",
+    "purescript-var": "^1.0.0",
+    "purescript-options": "^2.0.0",
+    "purescript-debug": "^2.0.0",
+    "purescript-node-readline": "^2.0.0",
+    "purescript-random": "^2.0.0",
+    "purescript-js-timers": "^2.0.0",
+    "purescript-generics": "^3.3.0",
+    "purescript-generics-rep": "^4.1.0",
+    "purescript-foreign-generic": "^3.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^2.0.0"

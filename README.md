@@ -1,9 +1,4 @@
-## purescript-project
+## purescript-chatango
 
-A project starter template including:
-
- * gulp using coffeescript
- * libsass
- * browser livereload
- * purescript/browserify
+Work-in-progress Chatango client in PureScript/node.js
 

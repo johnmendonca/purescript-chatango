@@ -17,5 +17,10 @@
     "main-bower-files": "^2.13.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "ws": "^2.2.0",
+    "xhr2": "^0.1.4",
+    "xmldoc": "^1.0.0"
   }
 }

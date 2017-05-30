@@ -18,7 +18,7 @@ sass_src = "#{src}sass/**/*.scss"
 asset_src = "#{src}assets/**/*"
 purs_src = [
   "src/**/*.purs",
-  "bower_components/purescript-*/src/**/*.purs" ]
+  "bower_components/purescript-*/src/**/*.purs"]
 
 gulp.task 'server', ->
   connect.server
@@ -89,8 +89,8 @@ gulp.task 'watch', ->
   gulp.watch asset_src, ['assets']
   gulp.watch sass_src, ['sass']
   gulp.watch html_src, ['html']
-  gulp.watch purs_src, ['browserify']
+  gulp.watch purs_src, ['psc-bundle']
 
-gulp.task 'build', ['ie8_js', 'vendor_js', 'assets', 'sass', 'html', 'browserify']
+gulp.task 'build', ['ie8_js', 'vendor_js', 'assets', 'sass', 'html', 'psc-bundle']
 gulp.task 'default', ['build', 'server', 'watch']
 
