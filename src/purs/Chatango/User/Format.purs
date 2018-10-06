@@ -1,18 +1,20 @@
 module Chatango.User.Format where
 
 import Prelude
+
 import Chatango.Urls (formatUrl)
 import Chatango.Util.HTTP (asyncGet)
-import Control.Monad.Aff (Aff, launchAff)
-import Control.Monad.Aff.Console (logShow)
 import Control.Monad.Except (runExcept, withExcept)
 import Control.Monad.Except.Trans (ExceptT(ExceptT), runExceptT)
 import Data.Either (Either)
-import Data.Foreign.Class (class IsForeign, readJSON, readProp)
-import Data.Foreign.Generic (defaultOptions, readGeneric)
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
-import Network.HTTP.Affjax (AJAX)
+import Effect (Effect)
+import Effect.Aff (Aff, launchAff)
+import Effect.Class (liftEffect)
+import Effect.Console (logShow)
+import Foreign (Foreign, F)
+import Foreign.Generic (defaultOptions, genericDecode, genericDecodeJSON)
 
 newtype Format = Format {
   fontFamily    :: String,
@@ -31,19 +33,20 @@ derive instance repFormat :: Generic Format _
 instance formatShow :: Show Format where
   show = genericShow
 
-instance formatIsForeign :: IsForeign Format where
-  read = readGeneric $ defaultOptions { unwrapSingleConstructors = true }
+readFormat :: Foreign -> F Format
+readFormat = genericDecode $ defaultOptions { unwrapSingleConstructors = true }
 
-getUserFormat :: ∀ t. String → Aff ( ajax ∷ AJAX | t ) (Either String Format)
+getUserFormat :: String → Aff (Either String Format)
 getUserFormat = runExceptT <<< getUserFormatT
 
-getUserFormatT :: ∀ t23. String → ExceptT String (Aff ( ajax ∷ AJAX | t23 ) ) Format
+getUserFormatT :: String → ExceptT String Aff Format
 getUserFormatT user = do
   url <- ExceptT $ pure $ formatUrl user
   res <- ExceptT $ asyncGet url
-  ExceptT $ pure $ runExcept $ withExcept show $ readJSON res
+  ExceptT $ pure $ runExcept $ withExcept show $ genericDecodeJSON defaultOptions { unwrapSingleConstructors = true } res
  
+main :: Effect Unit
 main = void $ launchAff do
   fmt <- runExceptT $ getUserFormatT "rangerfrex"
-  logShow fmt
+  liftEffect <<< logShow $ fmt
 

@@ -1,15 +1,20 @@
 module Chatango.User.Login where
 
 import Prelude
+
+import Affjax (post, printResponseFormatError)
+import Affjax.RequestBody as RBody
+import Affjax.ResponseFormat as RFormat
 import Chatango.Util.HTTP (postRequest, responseBody)
-import Control.Monad.Aff (launchAff, makeAff)
-import Control.Monad.Aff.Console (log, logShow)
-import Control.Monad.Aff.Unsafe (unsafeCoerceAff)
+import Data.Either (either)
 import Data.FormURLEncoded (FormURLEncoded, encode, fromArray)
 import Data.Maybe (Maybe(..))
-import Data.StrMap (toList)
 import Data.Tuple (Tuple(..))
-import Network.HTTP.Affjax (post)
+import Effect (Effect)
+import Effect.Aff (launchAff, makeAff)
+import Effect.Class (liftEffect)
+import Effect.Console (log, logShow)
+import Foreign.Object (toUnfoldable)
 import Node.HTTP.Client (responseCookies, responseHeaders)
 
 loginParams :: FormURLEncoded
@@ -20,16 +25,18 @@ loginParams = fromArray [
   Tuple "storecookie" (Just "on")
 ]
 
+main :: Effect Unit
 main = void $ launchAff do
-  res <- post "http://chatango.com/login" loginParams
-  logShow res.status
-  logShow res.headers
-  log res.response
+  res <- post RFormat.string "http://chatango.com/login" (RBody.FormURLEncoded loginParams)
+  liftEffect <<< logShow $ res.status
+  liftEffect <<< logShow $ res.headers
+  liftEffect <<< log     $ either printResponseFormatError identity res.body
 
-main2 = void $ launchAff $ unsafeCoerceAff do
-  res  <- makeAff $ postRequest "http://chatango.com/login" (encode loginParams)
-  logShow $ toList $ responseHeaders res
-  logShow $ responseCookies res
-  body <- makeAff $ responseBody res
-  logShow body
+main2 :: Effect Unit
+main2 = void $ launchAff do
+  res  <- makeAff $ postRequest "http://chatango.com/login" (encode loginParams) >>> const (pure mempty)
+  liftEffect <<< logShow $ ((toUnfoldable $ responseHeaders res) :: Array (Tuple String String))
+  liftEffect <<< logShow $ responseCookies res
+  body <- makeAff $ responseBody res >>> const (pure mempty)
+  liftEffect <<< logShow $ body
 

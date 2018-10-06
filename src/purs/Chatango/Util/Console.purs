@@ -1,26 +1,16 @@
 module Chatango.Util.Console where
 
 import Prelude
-import Control.Monad.Eff (Eff) 
-import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Exception (EXCEPTION)
+import Effect (Effect) 
 
-import Node.ReadLine (READLINE, Interface, createConsoleInterface, noCompletion, setLineHandler, setPrompt, prompt)
+import Node.ReadLine (Interface, createConsoleInterface, noCompletion, setLineHandler, setPrompt, prompt)
 
---rep_loop :: forall e e2. 
-  --          Interface -> 
-    --        (String -> Eff e2 Unit) ->
-      --      String -> 
-        --    Eff (console :: CONSOLE, readline :: READLINE | e) Unit
---rep_loop :: ∀ t3 t6 t8. Interface → (t3 → Eff ( readline ∷ READLINE | t8 ) t6 ) → t3 → Eff ( readline ∷ READLINE | t8 ) Unit
+rep_loop :: forall t3 t4. Discard t4 => Interface -> (t3 -> Effect t4) -> t3 -> Effect Unit
 rep_loop i handler s = do
   handler s
   prompt i
 
---repl :: forall e e2. 
-  --      (String -> Eff e2 Unit) -> 
-    --    Eff (console :: CONSOLE, readline :: READLINE, err :: EXCEPTION | e) Unit
---repl :: ∀ t14 t26. (String → Eff ( readline ∷ READLINE , console ∷ CONSOLE , err ∷ EXCEPTION | t14 ) t26 ) → Eff ( readline ∷ READLINE , console ∷ CONSOLE , err ∷ EXCEPTION | t14 ) Unit
+repl :: forall t15. Discard t15 => (String -> Effect t15) -> Effect Unit
 repl handler = do
   interface <- createConsoleInterface noCompletion
   setPrompt "user> " 0 interface

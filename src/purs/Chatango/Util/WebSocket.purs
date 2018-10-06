@@ -1,6 +1,5 @@
 module Chatango.Util.WebSocket 
   ( WebSocket
-  , WEBSOCKET
   , newWebSocket
   , onopen
   , onclose
@@ -9,68 +8,37 @@ module Chatango.Util.WebSocket
   , close
   ) where
 
-import Control.Monad.Eff (Eff)
-import Data.Foreign (Foreign)
+import Effect (Effect)
+import Foreign (Foreign)
 import Data.Options (Options, options)
 import Prelude (Unit)
 
-foreign import data WebSocket :: *
-
-foreign import data WEBSOCKET :: !
+foreign import data WebSocket :: Type
 
 type URL       = String
 type EventName = String
 type Message   = String
 type Protocol  = String
 
-foreign import newWebSocketImpl :: ∀ eff. 
-                                   URL -> 
-                                   Array Protocol -> 
-                                   Foreign -> 
-                                   Eff ( ws :: WEBSOCKET | eff ) WebSocket
+foreign import newWebSocketImpl :: URL -> Array Protocol -> Foreign -> Effect WebSocket
 
-newWebSocket :: ∀ eff. 
-                String → 
-                Array String → 
-                Options WebSocket → 
-                Eff ( ws ∷ WEBSOCKET | eff ) WebSocket
+newWebSocket :: String -> Array String -> Options WebSocket -> Effect WebSocket
 newWebSocket url protocols opts = newWebSocketImpl url protocols (options opts)
 
-foreign import addNullHandler :: ∀ eff eff2 a. 
-                                 WebSocket → 
-                                 EventName → 
-                                 Eff eff a → Eff ( ws ∷ WEBSOCKET | eff2 ) WebSocket
+foreign import addNullHandler :: forall a. WebSocket -> EventName -> Effect a -> Effect Unit
 
-onopen :: ∀ eff eff2 a. 
-          WebSocket → 
-          Eff eff a → 
-          Eff ( ws ∷ WEBSOCKET | eff2 ) WebSocket
+onopen :: forall a. WebSocket -> Effect a -> Effect Unit 
 onopen socket action = addNullHandler socket "open" action
 
-onclose :: ∀ eff eff2 a. 
-           WebSocket → 
-           Eff eff a → 
-           Eff ( ws ∷ WEBSOCKET | eff2 ) WebSocket
+onclose :: forall a. WebSocket -> Effect a -> Effect Unit
 onclose socket action = addNullHandler socket "close" action
 
-foreign import addStringHandler :: ∀ eff eff2 a. 
-                                   WebSocket → 
-                                   EventName → 
-                                   (String → Eff eff a) → 
-                                   Eff ( ws ∷ WEBSOCKET | eff2 ) WebSocket
+foreign import addStringHandler :: forall a. WebSocket -> EventName -> (String -> Effect a) -> Effect Unit
 
-onmessage :: ∀ t5 t6 eff. 
-             WebSocket → 
-             (String → Eff t6 t5) → 
-             Eff ( ws ∷ WEBSOCKET | eff ) WebSocket
+onmessage :: forall a. WebSocket -> (String -> Effect a) -> Effect Unit
 onmessage socket handler = addStringHandler socket "message" handler
 
-foreign import send :: ∀ eff. 
-                       WebSocket → 
-                       String → 
-                       Eff ( ws :: WEBSOCKET | eff ) Unit
+foreign import send :: WebSocket -> String -> Effect Unit
 
-foreign import close :: ∀ eff. 
-                        WebSocket → 
-                        Eff ( ws :: WEBSOCKET | eff ) Unit
+foreign import close :: WebSocket -> Effect Unit
 

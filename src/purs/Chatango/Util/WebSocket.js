@@ -14,7 +14,8 @@ exports.addNullHandler = function(socket) {
   return function(eventName) {
     return function(action) {
       return function() {
-        return socket.on(eventName, action);
+        socket.on(eventName, action);
+        return {};
       }
     }
   }
@@ -30,7 +31,8 @@ exports.addStringHandler = function(socket) {
   return function(eventName) {
     return function(handler) {
       return function() {
-        return socket.on(eventName, executeHandler(handler));
+        socket.on(eventName, executeHandler(handler));
+        return {};
       }
     }
   }

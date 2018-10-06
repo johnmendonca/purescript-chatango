@@ -3,8 +3,21 @@ module Chatango.Urls where
 import Prelude
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), maybe)
-import Data.String (Pattern(..), Replacement(..), charAt, fromCharArray, replace, singleton)
+import Data.String (Pattern(..), Replacement(..), replace)
+import Data.String.CodeUnits (charAt, fromCharArray)
 
+type TemplateList = { groupinfo :: String
+  , format :: String
+  , backgroundinfo :: String
+  , backgroundimage :: String
+  , updatebackground :: String
+  , profile :: String
+  , updateprofile :: String
+  , thumbnail :: String
+  , avatar :: String
+}
+
+urlTemplates  :: TemplateList
 urlTemplates = {
   groupinfo: "http://ust.chatango.com/groupinfo/$/gprofile.xml", 
   format: "http://ust.chatango.com/profileimg/$/msgstyles.json",
@@ -28,7 +41,10 @@ fillTemplate template name = do
   path <- namePath name
   Right $ replace (Pattern "$") (Replacement path) template
 
+profileUrl :: String -> Either String String
 profileUrl = fillTemplate urlTemplates.profile
+formatUrl :: String -> Either String String
 formatUrl = fillTemplate urlTemplates.format
+groupinfoUrl :: String -> Either String String
 groupinfoUrl = fillTemplate urlTemplates.groupinfo
 

@@ -1,7 +1,9 @@
 module Main where
 
-import Prelude
 import Chatango.Room as Room
+import Effect (Effect)
+import Prelude (Unit)
 
+main :: Effect Unit
 main = Room.main
 

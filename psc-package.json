@@ -1,0 +1,23 @@
+{
+  "name": "purescript-chatango",
+  "set": "psc-0.12.0-20181002",
+  "source": "https://github.com/purescript/package-sets.git",
+  "depends": [
+    "aff",
+    "affjax",
+    "console",
+    "debug",
+    "foreign",
+    "foreign-generic",
+    "generics-rep",
+    "js-timers",
+    "node-http",
+    "node-readline",
+    "options",
+    "ordered-collections",
+    "prelude",
+    "psci-support",
+    "random",
+    "strings"
+  ]
+}
