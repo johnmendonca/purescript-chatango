@@ -13,7 +13,7 @@ rep_loop i handler s = do
 repl :: forall t15. Discard t15 => (String -> Effect t15) -> Effect Unit
 repl handler = do
   interface <- createConsoleInterface noCompletion
-  setPrompt "user> " 0 interface
+  setPrompt "\x1b[1m\x1b[35muser\x1b[0m\x1b[1m>\x1b[0m " 0 interface
   setLineHandler interface (rep_loop interface handler)
   prompt interface
 
