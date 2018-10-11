@@ -12,7 +12,6 @@
     "generics-rep",
     "js-timers",
     "node-http",
-    "node-readline",
     "options",
     "ordered-collections",
     "prelude",

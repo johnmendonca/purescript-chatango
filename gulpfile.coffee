@@ -16,6 +16,7 @@ sass_src = "#{src}sass/**/*.scss"
 asset_src = "#{src}assets/**/*"
 purs_src = [
   "src/**/*.purs",
+  "../purescript-node-readline/src/**/*.purs",
   ".psc-package/psc-0.12.0-20181002/*/*/src/**/*.purs"]
 
 gulp.task 'server', ->

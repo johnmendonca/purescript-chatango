@@ -3,7 +3,7 @@ module Chatango.Room where
 import Prelude
 
 import Chatango.Server (groupServer)
-import Chatango.Util.Console (repl)
+import Chatango.Console (repl)
 import Chatango.Util.WebSocket (WebSocket, close, newWebSocket, onclose, onmessage, onopen)
 import Chatango.Util.WebSocket as WS
 import Data.Array (fromFoldable, catMaybes)
@@ -18,7 +18,6 @@ import Effect.Random (randomInt)
 import Effect.Timer (setInterval)
 import Signal (flattenArray, runSignal, unwrap, (~>))
 import Signal.Channel (channel, send, subscribe)
-import Signal.Time (delay)
 
 generateUid :: Effect String
 generateUid = do
@@ -81,7 +80,7 @@ main = do
 
     log "Opened"
 
-    repl $ socketHandler socket
+    repl "\x1b[1m\x1b[35muser\x1b[0m\x1b[1m>\x1b[0m " $ socketHandler socket
 
   onclose socket $ log "Closed"
 
