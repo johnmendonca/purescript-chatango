@@ -3,4 +3,5 @@ build/
 node_modules/
 output/
 .psci_modules/
+.psc-package/
 
