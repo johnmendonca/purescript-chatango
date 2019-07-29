@@ -1,5 +1,5 @@
 module Chatango.Server where
 
-type Group = String
+--type Group = String
 
-foreign import groupServer :: Group -> String
+--foreign import groupServer :: Group -> String

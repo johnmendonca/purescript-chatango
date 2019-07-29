@@ -25,14 +25,14 @@ respond "v:15:15" = authMessage "svikings" "" "" ""
 respond "inited"  = "msgbg:0\r\n"
 respond str       = ""
 
-Responder :: Group -> String -> String -> Effect
-respond "v:15:15" = WS.send socket authMsg
-respond "inited"  = WS.send socker "msgbg:0\r\n" 
-respond str       = handler str
+--Responder :: Group -> String -> String -> Effect
+--respond "v:15:15" = WS.send socket authMsg
+--respond "inited"  = WS.send socker "msgbg:0\r\n" 
+--respond str       = handler str
 
-connectAnon :: Group ->  
-connectNamedAnon
-connectUser
+--connectAnon :: Group ->  
+--connectNamedAnon
+--connectUser
 main :: Effect Unit
 main = do
   commands <- channel ""

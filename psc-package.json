@@ -12,6 +12,7 @@
     "generics-rep",
     "js-timers",
     "node-http",
+    "node-process",
     "options",
     "ordered-collections",
     "prelude",

@@ -6,19 +6,19 @@
   "repository": "https://github.com/johnmendonca/html5-project",
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^14.4.0",
-    "coffeescript": "^2.0.0",
-    "gulp": "^3.9.1",
+    "browserify": "^16.3.0",
+    "coffeescript": "^2.4.1",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-connect": "^5.0.0",
+    "gulp-connect": "^5.7.0",
     "gulp-purescript": "^2.0.0",
-    "gulp-uglify": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "ws": "^2.2.0",
-    "xhr2": "^0.1.4",
+    "ws": "^7.1.1",
+    "xhr2": "^0.2.0",
     "xmldoc": "^1.0.0"
   },
   "scripts": {

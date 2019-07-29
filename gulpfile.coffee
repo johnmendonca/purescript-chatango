@@ -37,14 +37,14 @@ gulp.task 'html', ->
 gulp.task 'psc', ->
   purescript.compile(src: purs_src)
 
-gulp.task 'psc-bundle', ['psc'], ->
+gulp.task 'psc-bundle', gulp.series ['psc'], ->
   purescript.bundle(
     src: "./output/**/*.js",
     output: "#{build}js/main.js",
     module: "Main",
     main: "Main")
 
-gulp.task 'browserify', ['psc-bundle'], ->
+gulp.task 'browserify', gulp.series ['psc-bundle'], ->
   browserify("#{build}js/main.js")
     .bundle()
     .pipe source('main.js')
@@ -61,11 +61,11 @@ gulp.task 'dotpsci', ->
     .pipe gulp.dest(".")
 
 gulp.task 'watch', ->
-  gulp.watch asset_src, ['assets']
-  gulp.watch sass_src, ['sass']
-  gulp.watch html_src, ['html']
-  gulp.watch purs_src, ['psc-bundle']
+  gulp.watch asset_src, gulp.series ['assets']
+  gulp.watch sass_src, gulp.series ['sass']
+  gulp.watch html_src, gulp.series ['html']
+  gulp.watch purs_src, gulp.series ['psc-bundle']
 
-gulp.task 'build', ['assets', 'html', 'psc-bundle']
-gulp.task 'default', ['build', 'server', 'watch']
+gulp.task 'build', gulp.parallel ['assets', 'html', 'psc-bundle']
+gulp.task 'default', gulp.series ['build', gulp.parallel ['server', 'watch']]
 
