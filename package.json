@@ -17,7 +17,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "ws": "^7.1.1",
+    "ws": "^7.4.6",
     "xhr2": "^0.2.0",
     "xmldoc": "^1.0.0"
   },
